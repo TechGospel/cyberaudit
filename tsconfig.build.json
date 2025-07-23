@@ -1,0 +1,10 @@
+// tsconfig.build.json
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist",
+    "module": "CommonJS"
+  },
+  "include": ["server/**/*", "shared/**/*"]
+}
