@@ -223,6 +223,7 @@ export class MemStorage implements IStorage {
       createdAt: new Date(),
       lastLogin: null,
       isActive: true,
+      role: insertUser.role ?? "analyst", // Ensure role is always a string
     };
     this.users.set(user.id, user);
     return user;
@@ -274,6 +275,10 @@ export class MemStorage implements IStorage {
       id: this.currentThreatId++,
       detectedAt: new Date(),
       resolvedAt: null,
+      status: insertThreat.status ?? "active", // Ensure status is always a string
+      metadata: insertThreat.metadata ?? {},   // Ensure metadata is always present
+      targetIp: insertThreat.targetIp ?? null, // Ensure targetIp is always present
+      port: insertThreat.port ?? null,         // Ensure port is always present
     };
     this.threats.set(threat.id, threat);
     return threat;
@@ -317,8 +322,14 @@ export class MemStorage implements IStorage {
 
   async createAuditLog(insertLog: InsertAuditLog): Promise<AuditLog> {
     const log: AuditLog = {
-      ...insertLog,
       id: this.currentAuditLogId++,
+      status: insertLog.status,
+      description: insertLog.description,
+      sourceIp: insertLog.sourceIp,
+      eventType: insertLog.eventType,
+      metadata: insertLog.metadata ?? {},
+      userId: insertLog.userId ?? null,
+      userAgent: insertLog.userAgent ?? null,
       timestamp: new Date(),
     };
     this.auditLogs.set(log.id, log);
@@ -389,7 +400,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteUser(id: number): Promise<boolean> {
     const result = await db.delete(users).where(eq(users.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   async getAllUsers(): Promise<User[]> {
@@ -412,7 +423,8 @@ export class DatabaseStorage implements IStorage {
       if (filters.status) conditions.push(eq(threats.status, filters.status));
       
       if (conditions.length > 0) {
-        query = query.where(and(...conditions));
+        const filteredQuery = query.where(and(...conditions));
+        return await filteredQuery.orderBy(threats.detectedAt);
       }
     }
     
@@ -438,7 +450,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteThreat(id: number): Promise<boolean> {
     const result = await db.delete(threats).where(eq(threats.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   // Audit log methods
@@ -457,7 +469,8 @@ export class DatabaseStorage implements IStorage {
       if (filters.status) conditions.push(eq(auditLogs.status, filters.status));
       
       if (conditions.length > 0) {
-        query = query.where(and(...conditions));
+        const filteredQuery = query.where(and(...conditions));
+        return await filteredQuery.orderBy(auditLogs.timestamp);
       }
     }
     
