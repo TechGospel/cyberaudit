@@ -2,12 +2,6 @@
   "version": 2,
   "buildCommand": "npm run vercel-build",
   "outputDirectory": "dist/public",
-  "framework": "vite",
-  "functions": {
-    "api/index.ts": {
-      "runtime": "vercel-node@1.9.1"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",
