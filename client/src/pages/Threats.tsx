@@ -140,7 +140,13 @@ export default function Threats() {
           </div>
         ) : filteredThreats && filteredThreats.length > 0 ? (
           filteredThreats.map((threat) => (
-            <ThreatCard key={threat.id} threat={threat} />
+            <ThreatCard
+              key={threat.id}
+              threat={{
+                ...threat,
+                resolvedAt: threat.resolvedAt === null ? undefined : threat.resolvedAt,
+              }}
+            />
           ))
         ) : (
           <Card>
