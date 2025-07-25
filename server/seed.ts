@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { db } from './db.js';
-import { users, threats, auditLogs, systemSettings } from '../shared/schema';
+import { users, threats, auditLogs, systemSettings } from '../shared/schema.js';
 import bcrypt from 'bcrypt';
 
 async function seedDatabase() {
