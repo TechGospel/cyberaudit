@@ -15,7 +15,7 @@ declare global {
   }
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
+const JWT_SECRET = process.env.JWT_SECRET || "";
 
 // Middleware to verify JWT token
 const authenticateToken = async (req: any, res: any, next: any) => {
