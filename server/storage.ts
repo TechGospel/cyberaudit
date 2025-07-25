@@ -1,5 +1,5 @@
 import { users, threats, auditLogs, systemSettings, type User, type InsertUser, type Threat, type InsertThreat, type AuditLog, type InsertAuditLog, type SystemSettings, type InsertSystemSettings } from "@shared/schema";
-import { db } from "./db";
+import { db } from "./db.js";
 import { eq, and } from "drizzle-orm";
 import bcrypt from "bcrypt";
 

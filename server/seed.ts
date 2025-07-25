@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { db } from './db';
+import { db } from './db.js';
 import { users, threats, auditLogs, systemSettings } from '@shared/schema';
 import bcrypt from 'bcrypt';
 
