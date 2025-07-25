@@ -12,7 +12,8 @@
     "allowJs": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "isolatedModules": false
+    "isolatedModules": false,
+    // "allowImportingTsExtensions": true,
   },
   "include": ["server/**/*", "shared/**/*", "api/**/*"],
   "exclude": ["node_modules", "client", "dist"]
