@@ -199,7 +199,7 @@ export function ThreatMap() {
               })}
               
               {/* Connection lines for related threats */}
-              {geographicThreats?.length > 1 && (
+              {geographicThreats && geographicThreats.length > 1 && (
                 <g stroke="#374151" strokeWidth="1" opacity="0.3">
                   {geographicThreats.slice(0, -1).map((threat, index) => {
                     const nextThreat = geographicThreats[index + 1];

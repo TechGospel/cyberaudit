@@ -136,7 +136,11 @@ export function ThreatCard({ threat }: ThreatCardProps) {
       </CardContent>
       
       <ThreatDetailsModal
-        threat={threat}
+        threat={{
+          ...threat,
+          port: threat.port ?? undefined,
+          targetIp: threat.targetIp ?? undefined,
+        }}
         isOpen={showDetailsModal}
         onClose={() => setShowDetailsModal(false)}
       />
